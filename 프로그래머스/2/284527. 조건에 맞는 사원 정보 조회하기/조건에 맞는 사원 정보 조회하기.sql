@@ -8,7 +8,7 @@ JOIN HR_EMPLOYEES E ON D.DEPT_ID = E.DEPT_ID
 JOIN HR_GRADE G ON E.EMP_NO = G.EMP_NO
 WHERE E.EMP_NO = (SELECT EMP_NO
                   FROM HR_GRADE
-                  GROUP BY EMP_NO, YEAR
+                  GROUP BY EMP_NO
                   ORDER BY SUM(SCORE) DESC
                   LIMIT 1)
-GROUP BY EMP_NO, YEAR
+GROUP BY EMP_NO
