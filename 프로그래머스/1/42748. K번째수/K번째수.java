@@ -1,33 +1,30 @@
 import java.util.*;
 
+/**
+ * 문제 해석
+ * 1. 정수 배열 array가 주어진다.
+ * 2. i, j, k가 담긴 2차원 배열. commands가 주어진다. (여러 개란 뜻)
+ * 3. i부터 j까지 자른 배열을 정렬 후 k번째에 있는 숫자들을 담은 배열을 구하는 문제
+ */
 class Solution {
-    /**
-    * 문제 해석
-    * 1. 배열을 i번째부터 j번째까지 자르고 정렬한다.
-    * 2. 그리고 나서 k번째에 있는 수를 구한다.
-    * 3. 배열 array와 [i, j, k]가 2차원 배열로 주어진다.
-    * 4. 각 연산 결과를 배열로 반환한다.
-    */
+    
     public int[] solution(int[] array, int[][] commands) {
         /**
-        * 문제 풀이
-        * 1. commands 배열을 돌면서 i, j, k 값을 얻는다.
-        * 2. array를 i번째부터 j번째까지 list에 저장하고 정렬한다. (1부터 시작임)
-        * 3. k번째를 얻는다.
-        * 4. list를 비우고 다시 반복한다.
-        */
+         * 풀이 흐름
+         * 1. commands에서 1차원 배열을 하나씩 꺼낸다.
+         * 2. 돌아가면서 array를 i, j에 맞춰 배열을 자른다. (인덱스에 유의)
+         * 3. 자른 배열을 정렬한 후 k에 맞춰 값을 꺼낸다.
+         * 4. 값을 미리 선언해둔 1차원 배열에 넣는다.
+         * 5. 결과가 완성되면 반환한다.
+         */
         int[] answer = new int[commands.length];
-        List<Integer> list = new ArrayList<>();
         
         for (int i = 0; i < commands.length; i++) {
-            for (int j = commands[i][0] - 1; j < commands[i][1]; j++) {
-                list.add(array[j]);
-            }
-            
-            Collections.sort(list);
-            answer[i] = list.get(commands[i][2] - 1).intValue();
-            list.clear();
+            int[] newArr = Arrays.copyOfRange(array, commands[i][0] - 1, commands[i][1]);
+            Arrays.sort(newArr);
+            answer[i] = newArr[commands[i][2] - 1];
         }
+        
         return answer;
     }
 }
