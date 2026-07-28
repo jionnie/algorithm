@@ -14,16 +14,10 @@ import java.util.*;
 class Solution {
     public int solution(int[] priorities, int location) {
         Queue<int[]> queue = new ArrayDeque<>();
-        int searchItem = 0;
-        int index = 0;
-        int answer = 0;
+        int executed = 0;
 
         for (int i = 0; i < priorities.length; i++) {
             queue.offer(new int[] { priorities[i], i }); // 작업 프로세스를 들어온 순서대로 배정 (FIFO) { 우선 순위, 원래 인덱스 }
-
-            if (queue.peek() != null && i == location) {
-                searchItem = location; // 몇 번째에 실행되는지 알고 싶은 프로세스 저장
-            }
         }
 
         // 하나씩 꺼내면서 우선 순위 체크
@@ -32,7 +26,7 @@ class Solution {
             boolean hasHigherPriority = false;
             int size = queue.size();
 
-            // 꺼내온 pollItem과 Queue 전체를 돌면서 비교 (전부 poll 하고 다시 offer 해주면 원위치)
+            // 꺼내온 pollItem(현재 프로세스)보다 우선 순위가 높은 프로세스가 있는지 확인 (전부 poll 하고 다시 offer 해주면 원위치)
             for (int i = 0; i < size; i++) {
                 int[] temp = queue.poll();
 
@@ -49,14 +43,14 @@ class Solution {
                 continue; // 프로세스가 실제로 실행 됐을 때만 index가 증가하도록 continue
             }
 
-            // 꺼낸 값이 찾는 값과 동일하면 꺼내는 순서를 알기 위해 인덱스에 +1
-            if (pollItem[1] == searchItem) {
-                answer = index + 1;
+            // 꺼낸 값이 찾는 값과 동일하면 꺼내는 순서를 알기 위해 +1
+            if (pollItem[1] == location) {
+                return executed + 1;
             }
 
-            index++;
+            executed++;
         }
 
-        return answer;
+        return -1;
     }
 }
