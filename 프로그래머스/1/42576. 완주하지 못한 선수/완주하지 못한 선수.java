@@ -22,7 +22,7 @@ class Solution {
         }
 
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            if (entry.getValue().equals(1)) {
+            if (entry.getValue() != 0) {
                 name = entry.getKey();
             }
         }
