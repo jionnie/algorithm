@@ -11,8 +11,8 @@ class Solution {
         Map<String, Integer> map = new HashMap<>(); // Key로 Type(Hat, Face...), Value로 Detail 개수(해당 타입의 옷 개수)
         int answer = 1;
 
-        for (String[] clothe : clothes) {
-            map.put(clothe[1], map.getOrDefault(clothe[1], 0) + 1); // Key로 타입을 저장했으므로, 같은 타입이 나올 때마다 1 증가
+        for (String[] cloth : clothes) {
+            map.put(cloth[1], map.getOrDefault(cloth[1], 0) + 1); // Key로 타입을 저장했으므로, 같은 타입이 나올 때마다 1 증가
         }
 
         // 각 상세 의류 중에 아예 고르지 않는 경우의 수 1개까지 더해서 전부 곱한다.
