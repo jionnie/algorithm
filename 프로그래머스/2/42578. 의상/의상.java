@@ -17,8 +17,8 @@ class Solution {
 
         // 각 상세 의류 중에 아예 고르지 않는 경우의 수 1개까지 더해서 전부 곱한다.
         // 즉, 모자 3개, 안경 2개, 겉옷 2개라면 (3+1) * (2+1) * (2+1)
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            answer *= entry.getValue() + 1;
+        for (int value : map.values()) {
+            answer *= value + 1;
         }
 
         return answer - 1; // 전부 선택하지 않는 경우는 없어야 하므로 1을 빼준다.
