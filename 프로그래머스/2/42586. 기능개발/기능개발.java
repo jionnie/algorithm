@@ -2,35 +2,32 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        List<Integer> result = new ArrayList<>();
+        Queue<Integer> queue = new ArrayDeque<>();
+        List<Integer> answer = new ArrayList<>();
 
-        // 1. 첫 번째 작업의 배포 날짜를 바로 계산하여 기준으로 설정
-        int currentDay = ((100 - progresses[0]) + speeds[0] - 1) / speeds[0];
-        int count = 1;
-        
-        // 2. 두 번째 작업부터 순회하면서 실시간 비교
-        for (int i = 1; i < progresses.length; i++) {
-            // 남은 작업량 + (속도 - 1) / 속도
-            // 정수 나눗셈은 버림이기 때문에 다음 정수 구간으로 넘어가도록 해줌
-            int nextDay = ((100 - progresses[i]) + speeds[i] - 1) / speeds[i];
-            
-            if (nextDay <= currentDay) {
-                count++;
+        // 가장 먼저 들어온 처음 작업부터 작업 완료까지 걸리는 날을 계산해서 Queue에 저장
+        for (int i = 0; i < progresses.length; i++) {
+            int workCompleteDay = (100 - progresses[i] + speeds[i] - 1) / speeds[i]; // 올림 나눗셈 공식
+            queue.offer(workCompleteDay);
+        }
+
+        int standardDay = queue.poll(); // 현재 배포의 기준일
+        int deploymentCnt = 1; // 배포 개수
+
+        while (!queue.isEmpty()) {
+            int nextDay = queue.poll();
+
+             if (nextDay <= standardDay) {
+                deploymentCnt++; // 기준일 보다 빨리 끝나거나 같이 끝나면 같이 배포
             } else {
-                result.add(count);
-                currentDay = nextDay; // 기준일 갱신
-                count = 1; // 카운트 초기화
+                 answer.add(deploymentCnt);
+                 standardDay = nextDay;
+                 deploymentCnt = 1;
             }
         }
+        // 누락된 마지막 배포 그룹 추가
+        answer.add(deploymentCnt);
 
-        result.add(count); // 마지막 배포 추가
-        
-        int[] answer = new int[result.size()];
-        
-        for (int i = 0; i < result.size(); i++) {
-            answer[i] = result.get(i);
-        }
-        
-        return answer;
+        return answer.stream().mapToInt(Integer::intValue).toArray();
     }
 }
