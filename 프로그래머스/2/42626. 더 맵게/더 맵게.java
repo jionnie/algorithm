@@ -19,8 +19,7 @@ class Solution {
         // 우선순위 큐에 저장했으므로 최소 힙으로 정렬되어 저장됨
         while (!pq.isEmpty() && pq.peek() < K) {
             if (pq.size() == 1) {
-                answer = -1;
-                break;
+                return -1;
             } else {
                 int newScoville = pq.poll() + (pq.poll() * 2);
                 pq.offer(newScoville);
