@@ -38,6 +38,7 @@ class Solution {
                         queue.offer(new int[]{nextRow, nextCol}); // 전부 해당 안 되면 다음 탐색에 저장
                         distance[nextRow][nextCol] = distance[row][col] + 1; // 거리 저장
 
+                        // 목적지에 도달하면 누적 최단 거리 리턴
                         if (nextRow == maps.length - 1 && nextCol == maps[0].length - 1) {
                             return distance[maps.length - 1][maps[0].length - 1];
                         }
